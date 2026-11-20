@@ -6,8 +6,11 @@
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
             <field name="ref" position="after">
-                <field name="motor_serial"/>
-                <field name="plate_lot_id" domain="[('id', '!=', id)]"/>
+                <field name="product_is_vehicle" invisible="1"/>
+                <field name="product_is_plate" invisible="1"/>
+                <field name="motor_serial" readonly="0" required="product_is_vehicle and not product_is_plate"/>
+                <field name="available_plate_lot_ids" invisible="1"/>
+                <field name="plate_lot_id" domain="[('id', 'in', available_plate_lot_ids)]" invisible="product_is_plate"/>
             </field>
         </field>
     </record>
@@ -18,9 +21,20 @@
         <field name="inherit_id" ref="stock.view_production_lot_tree"/>
         <field name="arch" type="xml">
             <field name="ref" position="after">
-                <field name="motor_serial" optional="show"/>
+                <field name="motor_serial" optional="show" readonly="0"/>
                 <field name="plate_lot_id" optional="show"/>
             </field>
+        </field>
+    </record>
+
+    <record id="search_product_lot_filter" model="ir.ui.view">
+        <field name="name">stock.lot.search.vehicle</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="arch" type="xml">
+            <filter name="on_hand" position="after">
+                <filter name="is_plate" string="Matrículas" domain="[('product_id.is_plate', '=', True)]"/>
+            </filter>
         </field>
     </record>
 </odoo>

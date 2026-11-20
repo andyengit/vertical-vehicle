@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_vehicle" inherit_id="account.report_invoice_document">
+        <xpath expr="//td[@name='account_invoice_line_name']/span" position="attributes">
+            <attribute name="t-if">line.name and not line.product_is_vehicle</attribute>
+        </xpath>
+        <xpath expr="//td[@name='account_invoice_line_name']/span" position="after">
+            <div t-if="line.product_is_vehicle">
+                <span t-field="line.product_id"/>
+                <table class="table table-sm table-borderless mb-0 mt-1" style="width: auto;">
+                    <thead>
+                        <tr>
+                            <th class="p-1 pe-3">SERIAL CHASIS</th>
+                            <th class="p-1 pe-3">SERIAL MOTOR</th>
+                            <th class="p-1">MATRICULA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="line._get_vehicle_lots()" t-as="lot">
+                            <td class="p-1 pe-3" t-out="lot.name"/>
+                            <td class="p-1 pe-3" t-out="lot.motor_serial"/>
+                            <td class="p-1" t-out="lot.plate_lot_id.name"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

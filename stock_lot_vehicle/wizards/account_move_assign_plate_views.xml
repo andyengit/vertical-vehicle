@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_move_assign_plate_view_form" model="ir.ui.view">
+        <field name="name">account.move.assign.plate.form</field>
+        <field name="model">account.move.assign.plate</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="move_line_id" invisible="1"/>
+                <field name="taken_plate_ids" invisible="1"/>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="lot_id" readonly="1" force_save="1"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="motor_serial" readonly="1"/>
+                        <field name="available_plate_ids" column_invisible="1"/>
+                        <field name="plate_lot_id" context="{'assign_plate_exclude': parent.taken_plate_ids, 'assign_plate_keep': plate_lot_id}"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_assign" type="object" string="Asignar" class="btn-primary"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
