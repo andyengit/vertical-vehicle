@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_production_lot_form" model="ir.ui.view">
+        <field name="name">stock.lot.form.vehicle</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="motor_serial"/>
+                <field name="plate_lot_id" domain="[('id', '!=', id)]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_production_lot_tree" model="ir.ui.view">
+        <field name="name">stock.lot.list.vehicle</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="motor_serial" optional="show"/>
+                <field name="plate_lot_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>
